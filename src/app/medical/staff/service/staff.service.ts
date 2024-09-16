@@ -12,7 +12,7 @@ export class StaffService {
 
   listUsers() {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/staffs';
     return this.http.get(URL, { headers: headers });
@@ -20,7 +20,7 @@ export class StaffService {
 
   listConfig() {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/staffs/config';
     return this.http.get(URL, { headers: headers });
@@ -28,7 +28,7 @@ export class StaffService {
 
   registerUser(data: any) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/staffs';
     return this.http.post(URL, data, { headers: headers });
@@ -36,7 +36,7 @@ export class StaffService {
 
   showUser(staff_id: string) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/staffs/' + staff_id;
     return this.http.get(URL, { headers: headers });
@@ -44,7 +44,7 @@ export class StaffService {
 
   updateUser(staff_id: string, data: any) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/staffs/' + staff_id;
     return this.http.post(URL, data, { headers: headers });
@@ -52,7 +52,7 @@ export class StaffService {
 
   deleteUsers(staff_id: string) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/staffs/' + staff_id;
     return this.http.delete(URL, { headers: headers });

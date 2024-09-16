@@ -127,7 +127,7 @@ export class EditDoctorComponent {
     }
     console.log(this.selectedValue);
 
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append('name', this.name);
     formData.append('surname', this.surname);
     formData.append('email', this.email);

@@ -23,6 +23,7 @@ export class AddRoleUserComponent {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.sideBar = this.DataService.sideBar[0].menu;
+    console.log(this.sideBar);
   }
 
   addPermission(subMenu: any) {

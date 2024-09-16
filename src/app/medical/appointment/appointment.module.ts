@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { AtencionMedicalComponent } from './atencion-medical/atencion-medical.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     AddAppointmentsComponent,
     EditAppointmentsComponent,
     ListAppointmentsComponent,
+    AtencionMedicalComponent,
   ],
   imports: [
     CommonModule,

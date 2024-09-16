@@ -48,13 +48,20 @@ export class SidebarComponent {
       this.data.sideBar.forEach((side: any) => {
         let SIDE_B: any = [];
         side.menu.forEach((menu_s: any) => {
-          let SUBMENUS = menu_s.subMenus.filter(
-            (submenu: any) =>
-              permissions.includes(submenu.permision) && submenu.show_nav
-          );
-          if (SUBMENUS.length > 0) {
-            menu_s.subMenus = SUBMENUS;
-            SIDE_B.push(menu_s);
+          if (menu_s.subMenus.length > 0) {
+            let SUBMENUS = menu_s.subMenus.filter(
+              (submenu: any) =>
+                permissions.includes(submenu.permision) && submenu.show_nav
+            );
+            if (SUBMENUS.length > 0) {
+              menu_s.subMenus = SUBMENUS;
+              SIDE_B.push(menu_s);
+            }
+          } else {
+            if (permissions.includes(menu_s.permision)) {
+              menu_s.subMenus = [];
+              SIDE_B.push(menu_s);
+            }
           }
         });
         if (SIDE_B.length > 0) {

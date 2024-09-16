@@ -11,7 +11,7 @@ export class DoctorService {
 
   listDoctors() {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/doctors';
     return this.http.get(URL, { headers: headers });
@@ -19,7 +19,7 @@ export class DoctorService {
 
   listConfig() {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/doctors/config';
     return this.http.get(URL, { headers: headers });
@@ -27,7 +27,7 @@ export class DoctorService {
 
   registerDoctor(data: any) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/doctors';
     return this.http.post(URL, data, { headers: headers });
@@ -35,7 +35,7 @@ export class DoctorService {
 
   showDoctor(doctor_id: string) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/doctors/' + doctor_id;
     return this.http.get(URL, { headers: headers });
@@ -43,17 +43,33 @@ export class DoctorService {
 
   updateDoctor(doctor_id: string, data: any) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/doctors/' + doctor_id;
     return this.http.post(URL, data, { headers: headers });
   }
 
+  updateDoctorProfile(doctor_id: string, data: any) {
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authService.token,
+    });
+    const URL = URL_SERVICIOS + '/staffs/' + doctor_id;
+    return this.http.post(URL, data, { headers: headers });
+  }
+
   deleteDoctor(doctor_id: string) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/doctors/' + doctor_id;
     return this.http.delete(URL, { headers: headers });
+  }
+
+  profileDoctor(doctor_id: string) {
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authService.token,
+    });
+    const URL = URL_SERVICIOS + '/doctors/profile/' + doctor_id;
+    return this.http.get(URL, { headers: headers });
   }
 }

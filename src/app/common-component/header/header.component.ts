@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/auth/auth.service';
@@ -28,9 +29,17 @@ export class HeaderComponent {
         this.miniSidebar = false;
       }
     });
-    let USER = localStorage.getItem('user');
+    const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
     console.log(this.user);
+  }
+
+  getRole() {
+    let RoleName = '';
+    this.user.roles.forEach((rol: any) => {
+      RoleName = rol;
+    });
+    return RoleName;
   }
 
   openBoxFunc() {

@@ -11,7 +11,7 @@ export class RolesService {
 
   listRoles() {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/roles';
     return this.http.get(URL, { headers: headers });
@@ -19,7 +19,7 @@ export class RolesService {
 
   showRoles(role_id: string) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/roles/' + role_id;
     return this.http.get(URL, { headers: headers });
@@ -27,7 +27,7 @@ export class RolesService {
 
   storeRoles(data: any) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/roles';
     return this.http.post(URL, data, { headers: headers });
@@ -35,7 +35,7 @@ export class RolesService {
 
   editRoles(data: any, id_role: any) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/roles/' + id_role;
     return this.http.put(URL, data, { headers: headers });
@@ -43,7 +43,7 @@ export class RolesService {
 
   deleteRoles(id_role: any) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/roles/' + id_role;
     return this.http.delete(URL, { headers: headers });

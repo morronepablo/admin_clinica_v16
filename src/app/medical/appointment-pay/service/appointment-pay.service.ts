@@ -43,7 +43,7 @@ export class AppointmentPayService {
 
   listConfig() {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/appointment/config';
     return this.http.get(URL, { headers: headers });
@@ -51,7 +51,7 @@ export class AppointmentPayService {
 
   registerAppointmentPay(data: any) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/appointment-pay';
     return this.http.post(URL, data, { headers: headers });
@@ -59,7 +59,7 @@ export class AppointmentPayService {
 
   updateAppointmentPay(appointment_pay_id: string, data: any) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/appointment-pay/' + appointment_pay_id;
     return this.http.put(URL, data, { headers: headers });
@@ -67,7 +67,7 @@ export class AppointmentPayService {
 
   deleteAppointmentPay(appointment_pay_id: string) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/appointment-pay/' + appointment_pay_id;
     return this.http.delete(URL, { headers: headers });

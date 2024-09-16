@@ -12,7 +12,7 @@ export class PatientMService {
   // eslint-disable-next-line @typescript-eslint/no-inferrable-types
   listPatients(page: number = 1, search: string = '') {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/patients?page=' + page + '&search=' + search;
     return this.http.get(URL, { headers: headers });
@@ -20,7 +20,7 @@ export class PatientMService {
 
   registerPatient(data: any) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/patients';
     return this.http.post(URL, data, { headers: headers });
@@ -28,7 +28,7 @@ export class PatientMService {
 
   showPatient(staff_id: string) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/patients/' + staff_id;
     return this.http.get(URL, { headers: headers });
@@ -36,7 +36,7 @@ export class PatientMService {
 
   updatePatient(staff_id: string, data: any) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/patients/' + staff_id;
     return this.http.post(URL, data, { headers: headers });
@@ -44,9 +44,17 @@ export class PatientMService {
 
   deletePatient(staff_id: string) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/patients/' + staff_id;
     return this.http.delete(URL, { headers: headers });
+  }
+
+  profilePatient(staff_id: string) {
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authService.token,
+    });
+    const URL = URL_SERVICIOS + '/patients/profile/' + staff_id;
+    return this.http.get(URL, { headers: headers });
   }
 }

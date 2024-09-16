@@ -29,10 +29,24 @@ export class ListSpecialitieComponent {
 
   public specialitie_generals: any = [];
   public specialitie_selected: any;
+  public user: any;
+
   constructor(public specialitiesService: SpecialitieService) {}
   ngOnInit() {
     this.getTableData();
+    this.user = this.specialitiesService.authService.user;
   }
+
+  isPermission(permission: string) {
+    if (this.user.roles.includes('Super-Admin')) {
+      return true;
+    }
+    if (this.user.permissions.includes(permission)) {
+      return true;
+    }
+    return false;
+  }
+
   private getTableData(): void {
     this.specialitiesList = [];
     this.serialNumberArray = [];

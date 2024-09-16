@@ -16,7 +16,7 @@ export class ListPatientMComponent {
   public showFilter = false;
   public searchDataValue = '';
   public lastIndex = 0;
-  public pageSize = 8;
+  public pageSize = 20;
   public totalData = 0;
   public skip = 0; //MIN
   public limit: number = this.pageSize; //MAX
@@ -30,9 +30,22 @@ export class ListPatientMComponent {
   public patient_generals: any = [];
   public patient_selected: any;
 
+  public user: any;
+
   constructor(public patientService: PatientMService) {}
   ngOnInit() {
     this.getTableData();
+    this.user = this.patientService.authService.user;
+  }
+
+  isPermission(permission: string) {
+    if (this.user.roles.includes('Super-Admin')) {
+      return true;
+    }
+    if (this.user.permissions.includes(permission)) {
+      return true;
+    }
+    return false;
   }
 
   private updateSerialNumberArray(): void {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { Component } from '@angular/core';
 import { AppointmentService } from '../service/appointment.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -19,7 +20,7 @@ export class ListAppointmentsComponent {
   public showFilter = false;
   public searchDataValue = '';
   public lastIndex = 0;
-  public pageSize = 8;
+  public pageSize = 80;
   public totalData = 0;
   public skip = 0; //MIN
   public limit: number = this.pageSize; //MAX
@@ -35,13 +36,35 @@ export class ListAppointmentsComponent {
 
   specialities: any = [];
 
+  public user: any;
+
   constructor(public appointmentService: AppointmentService) {}
   ngOnInit() {
     this.getTableData();
-
     this.appointmentService.listConfig().subscribe((resp: any) => {
       this.specialities = resp.specialities;
     });
+    this.user = this.appointmentService.authService.user;
+  }
+
+  isPermited() {
+    let band = false;
+    this.user.roles.forEach((rol: any) => {
+      if (rol.toUpperCase().indexOf('DOCTOR') != -1) {
+        band = true;
+      }
+    });
+    return band;
+  }
+
+  isPermission(permission: string) {
+    if (this.user.roles.includes('Super-Admin')) {
+      return true;
+    }
+    if (this.user.permissions.includes(permission)) {
+      return true;
+    }
+    return false;
   }
 
   private updateSerialNumberArray(): void {

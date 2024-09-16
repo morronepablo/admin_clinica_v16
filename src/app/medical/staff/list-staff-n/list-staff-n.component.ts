@@ -30,9 +30,12 @@ export class ListStaffNComponent {
   public role_generals: any = [];
   public staff_selected: any;
 
+  public user: any;
+
   constructor(public StaffService: StaffService) {}
   ngOnInit() {
     this.getTableData();
+    this.user = this.StaffService.authService.user;
   }
 
   private getTableData(): void {
@@ -46,6 +49,16 @@ export class ListStaffNComponent {
       this.role_generals = resp.users.data;
       this.getTableDataGeneral();
     });
+  }
+
+  isPermission(permission: string) {
+    if (this.user.roles.includes('Super-Admin')) {
+      return true;
+    }
+    if (this.user.permissions.includes(permission)) {
+      return true;
+    }
+    return false;
   }
 
   getTableDataGeneral() {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -29,9 +30,10 @@ export class LoginComponent implements OnInit {
 
   constructor(public auth: AuthService, public router: Router) {}
   ngOnInit(): void {
-    // if (localStorage.getItem('authenticated')) {
-    //   localStorage.removeItem('authenticated');
-    // }
+    if (localStorage.getItem('authenticated')) {
+      // localStorage.removeItem('authenticated');
+      this.router.navigate([routes.adminDashboard]);
+    }
   }
 
   loginFormSubmit() {
@@ -48,7 +50,7 @@ export class LoginComponent implements OnInit {
             if (resp) {
               // EL LOGIN ES EXITOSO
               setTimeout(() => {
-                this.router.navigate([routes.adminDashboard]);
+                document.location.reload();
               }, 50);
             } else {
               // EL LOGIN NO ES EXITOSO

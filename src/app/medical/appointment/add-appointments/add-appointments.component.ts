@@ -73,7 +73,7 @@ export class AddAppointmentsComponent {
       return;
     }
 
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    // const user = JSON.parse(localStorage.getItem('user') || '{}');
 
     const data = {
       doctor_id: this.DOCTOR_SELECTED.doctor.id,
@@ -90,7 +90,7 @@ export class AddAppointmentsComponent {
       amount: this.amount,
       amount_add: this.amount_add,
       method_payment: this.method_payment,
-      user_email: user.email, // Enviar el email del usuario autenticado
+      //user_email: user.email, // Enviar el email del usuario autenticado
     };
 
     this.appointmentService.registerAppointment(data).subscribe((resp: any) => {

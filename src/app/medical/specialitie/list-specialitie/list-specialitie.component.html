@@ -26,7 +26,7 @@
               <div class="row align-items-center">
                 <div class="col">
                   <div class="doctor-table-blk">
-                    <h3>Especialidad List</h3>
+                    <h3>Listado Especialidades</h3>
                     <div class="doctor-search-blk">
                       <div class="top-nav-search table-search-blk">
                         <input class="form-control" placeholder="Search here" [(ngModel)]="searchDataValue"
@@ -81,11 +81,13 @@
                           aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                         <div class="dropdown-menu dropdown-menu-end">
                           <!--  -->
-                          <a class="dropdown-item" [routerLink]="[ '/specialities/list/edit/', data.id ]"><i
+                          <a class="dropdown-item" *ngIf="isPermission('edit_specialty')"
+                            [routerLink]="[ '/specialities/list/edit/', data.id ]"><i
                               class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
-                          <a class="dropdown-item" href="javascript:void(0);" (click)="selectSpecialitie(data)"
-                            data-bs-toggle="modal" [attr.data-bs-target]="'#delete_patient-'+data.id"><i
-                              class="fa fa-trash-alt m-r-5"></i> Delete</a>
+                          <a class="dropdown-item" *ngIf="isPermission('delete_specialty')" href="javascript:void(0);"
+                            (click)="selectSpecialitie(data)" data-bs-toggle="modal"
+                            [attr.data-bs-target]="'#delete_patient-'+data.id"><i class="fa fa-trash-alt m-r-5"></i>
+                            Delete</a>
                         </div>
                       </div>
                     </td>

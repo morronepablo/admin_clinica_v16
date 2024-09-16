@@ -35,7 +35,7 @@ export class AppointmentService {
 
   listConfig() {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/appointment/config';
     return this.http.get(URL, { headers: headers });
@@ -51,7 +51,7 @@ export class AppointmentService {
 
   registerAppointment(data: any) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/appointment';
     return this.http.post(URL, data, { headers: headers });
@@ -67,7 +67,7 @@ export class AppointmentService {
 
   showAppointment(appointment_id: string) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/appointment/' + appointment_id;
     return this.http.get(URL, { headers: headers });
@@ -75,7 +75,7 @@ export class AppointmentService {
 
   updateAppointment(appointment_id: string, data: any) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/appointment/' + appointment_id;
     return this.http.put(URL, data, { headers: headers });
@@ -83,9 +83,25 @@ export class AppointmentService {
 
   deleteAppointment(appointment_id: string) {
     const headers = new HttpHeaders({
-      Autorization: 'Bearer ' + this.authService.token,
+      Authorization: 'Bearer ' + this.authService.token,
     });
     const URL = URL_SERVICIOS + '/appointment/' + appointment_id;
     return this.http.delete(URL, { headers: headers });
+  }
+
+  registerAttention(data: any) {
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authService.token,
+    });
+    const URL = URL_SERVICIOS + '/appointment-attention';
+    return this.http.post(URL, data, { headers: headers });
+  }
+
+  showAppointmentAttention(appointment_id: string) {
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authService.token,
+    });
+    const URL = URL_SERVICIOS + '/appointment-attention/' + appointment_id;
+    return this.http.get(URL, { headers: headers });
   }
 }

@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 import { Component, ViewChild } from '@angular/core';
 import { routes } from 'src/app/shared/routes/routes';
 import {
@@ -17,8 +20,9 @@ import {
   ApexLegend,
   ApexTooltip,
 } from 'ng-apexcharts';
+import { DashboardService } from '../service/dashboard.service';
 interface data {
-  value: string ;
+  value: string;
 }
 export type ChartOptions = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -65,9 +69,42 @@ export class DoctorDashboardComponent {
   public chartOptionsOne: Partial<ChartOptions>;
   public chartOptionsTwo: Partial<ChartOptions>;
   public chartOptionsThree: Partial<ChartOptions>;
-  public selectedValue ! : string  ;
+  public selectedValue: string = '2024';
 
-  constructor() {
+  public doctors: any = [];
+  public doctor_id: any;
+
+  selecedList: data[] = [
+    { value: '2024' },
+    { value: '2023' },
+    { value: '2022' },
+    { value: '2021' },
+    { value: '2020' },
+  ];
+  selecedLists: data[] = [
+    { value: 'This Week' },
+    { value: 'Last Week' },
+    { value: 'This Month' },
+    { value: 'Last Month' },
+  ];
+
+  public appointments: any = [];
+  public num_appointments_current: number = 0;
+  public num_appointments_before: number = 0;
+  public porcentaje_d: number = 0;
+  public num_appointments_attetion_current: number = 0;
+  public num_appointments_attetion_before: number = 0;
+  public porcentaje_da: number = 0;
+  public num_appointments_total_pay_current: number = 0;
+  public num_appointments_total_pay_before: number = 0;
+  public porcentaje_dt: number = 0;
+  public num_appointments_total_pending_current: number = 0;
+  public num_appointments_total_pending_before: number = 0;
+  public porcentaje_dtp: number = 0;
+  public query_income_year: any = null;
+  public query_n_appointment_year: any = null;
+  public query_n_appointment_year_before: any = null;
+  constructor(public serviceDashboard: DashboardService) {
     this.chartOptionsOne = {
       chart: {
         height: 200,
@@ -77,33 +114,27 @@ export class DoctorDashboardComponent {
         },
       },
       grid: {
-        show: true, 
+        show: true,
         xaxis: {
           lines: {
-            show: false
-           }
-         },  
-        yaxis: {
-          lines: { 
-            show: true 
-           }
-         },   
+            show: false,
+          },
         },
+        yaxis: {
+          lines: {
+            show: true,
+          },
+        },
+      },
       dataLabels: {
         enabled: false,
       },
       stroke: {
         curve: 'smooth',
       },
-      series: [
-        {
-          name: 'Income',
-          color: '#2E37A4',
-          data: [45, 60, 75, 51, 42, 42, 30],
-        },
-      ],
+      series: [],
       xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+        categories: [],
       },
     };
     this.chartOptionsTwo = {
@@ -125,8 +156,8 @@ export class DoctorDashboardComponent {
         enabled: false,
       },
 
-      series: [44, 55],
-      labels: ['Male', 'Female'],
+      series: [],
+      labels: ['Hombre', 'Mujer'],
       responsive: [
         {
           breakpoint: 480,
@@ -154,18 +185,18 @@ export class DoctorDashboardComponent {
         },
       },
       grid: {
-        show: true, 
+        show: true,
         xaxis: {
           lines: {
-            show: false
-           }
-         },  
-        yaxis: {
-          lines: { 
-            show: true 
-           }
-         },   
+            show: false,
+          },
         },
+        yaxis: {
+          lines: {
+            show: true,
+          },
+        },
+      },
       responsive: [
         {
           breakpoint: 480,
@@ -196,42 +227,223 @@ export class DoctorDashboardComponent {
         {
           name: 'Low',
           color: '#D5D7ED',
-          data: [20, 30, 41, 67, 22, 43, 40, 10, 30, 20, 40],
+          data: [], //[20, 30, 41, 67, 22, 43, 40, 10, 30, 20, 40],
         },
         {
           name: 'High',
           color: '#2E37A4',
-          data: [13, 23, 20, 8, 13, 27, 30, 25, 10, 15, 20],
+          data: [], //[13, 23, 20, 8, 13, 27, 30, 25, 10, 15, 20],
         },
       ],
       xaxis: {
-        categories: [
-          'Jan',
-          'Feb',
-          'Mar',
-          'Apr',
-          'May',
-          'Jun',
-          'Jul',
-          'Aug',
-          'Sep',
-          'Oct',
-          'Nov',
-          'Dec',
-        ],
+        categories: [], //['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec',],
       },
     };
   }
-  selecedList: data[] = [
-    {value: '2022'},
-    {value: '2021'},
-    {value: '2020'},
-    {value: '2019'},
-  ];
-  selecedLists: data[] = [
-    {value: 'This Week'},
-    {value: 'Last Week'},
-    {value: 'This Month'},
-    {value: 'Last Month'},
-  ];
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.serviceDashboard.getConfigdashboard().subscribe((resp: any) => {
+      console.log(resp);
+      this.doctors = resp.doctors;
+    });
+  }
+
+  dashboardDoctor() {
+    const data = {
+      doctor_id: this.doctor_id,
+    };
+    this.serviceDashboard.dashboardDoctor(data).subscribe((resp: any) => {
+      console.log(resp);
+
+      this.appointments = resp.apointments.data;
+
+      this.num_appointments_current = resp.num_appointments_current;
+      this.num_appointments_before = resp.num_appointments_before;
+      this.porcentaje_d = resp.porcentaje_d;
+
+      this.num_appointments_attetion_current =
+        resp.num_appointments_attetion_current;
+      this.num_appointments_attetion_before =
+        resp.num_appointments_attetion_before;
+      this.porcentaje_da = resp.porcentaje_da;
+
+      this.num_appointments_total_pay_current =
+        resp.num_appointments_total_pay_current;
+      this.num_appointments_total_pay_before =
+        resp.num_appointments_total_pay_before;
+      this.porcentaje_dt = resp.porcentaje_dt;
+
+      this.num_appointments_total_pending_current =
+        resp.num_appointments_total_pending_current;
+      this.num_appointments_total_pending_before =
+        resp.num_appointments_total_pending_before;
+      this.porcentaje_dtp = resp.porcentaje_dtp;
+    });
+  }
+
+  dashboardDoctorYear() {
+    const data = {
+      year: this.selectedValue,
+      doctor_id: this.doctor_id,
+    };
+    this.query_income_year = null;
+    this.query_n_appointment_year = null;
+    this.query_n_appointment_year_before = null;
+    this.serviceDashboard.dashboardDoctorYear(data).subscribe((resp: any) => {
+      console.log(resp);
+
+      this.query_income_year = resp.query_income_year;
+      const data_income: any = [];
+      this.query_income_year.forEach((element: any) => {
+        // Formatear cada valor con millares y 2 decimales
+        const formattedIncome = new Intl.NumberFormat('es-AR', {
+          style: 'decimal',
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }).format(element.income);
+        data_income.push(formattedIncome);
+      });
+
+      this.chartOptionsOne = {
+        chart: {
+          height: 200,
+          type: 'line',
+          toolbar: {
+            show: false,
+          },
+        },
+        grid: {
+          show: true,
+          xaxis: {
+            lines: {
+              show: false,
+            },
+          },
+          yaxis: {
+            lines: {
+              show: true,
+            },
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          curve: 'smooth',
+        },
+        series: [
+          {
+            name: 'Ingreso',
+            color: '#2E37A4',
+            data: data_income,
+          },
+        ],
+        xaxis: {
+          categories: resp.months_name,
+        },
+      };
+
+      // this.chartOptionsOne.labels = resp.months_name;
+      // this.chartOptionsOne.series = [
+      //   {
+      //     name: 'Income',
+      //     color: '#2E37A4',
+      //     data: data_income,
+      //   },
+      // ];
+      const query_patient_by_genders = resp.query_patient_by_genders;
+      const data_by_genders: any = [];
+      query_patient_by_genders.forEach((item: any) => {
+        data_by_genders.push(parseInt(item.hombre));
+        data_by_genders.push(parseInt(item.mujer));
+      });
+      console.log(data_by_genders);
+      this.chartOptionsTwo.series = data_by_genders;
+
+      this.query_n_appointment_year = resp.query_n_appointment_year;
+      this.query_n_appointment_year_before =
+        resp.query_n_appointment_year_before;
+
+      const n_appointment_year: any = [];
+      this.query_n_appointment_year.forEach((item: any) => {
+        n_appointment_year.push(item.count_appointments);
+      });
+      const n_appointment_year_before: any = [];
+      this.query_n_appointment_year_before.forEach((item: any) => {
+        n_appointment_year_before.push(item.count_appointments);
+      });
+
+      this.chartOptionsThree = {
+        chart: {
+          height: 230,
+          type: 'bar',
+          stacked: false,
+          toolbar: {
+            show: false,
+          },
+        },
+        grid: {
+          show: true,
+          xaxis: {
+            lines: {
+              show: false,
+            },
+          },
+          yaxis: {
+            lines: {
+              show: true,
+            },
+          },
+        },
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              legend: {
+                position: 'bottom',
+                offsetX: -10,
+                offsetY: 0,
+              },
+            },
+          },
+        ],
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '55%',
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          show: true,
+          width: 6,
+          colors: ['transparent'],
+        },
+        series: [
+          {
+            name: parseInt(this.selectedValue) + '',
+            color: '#2E37A4',
+            data: n_appointment_year,
+          },
+          {
+            name: parseInt(this.selectedValue) - 1 + '',
+            color: '#D5D7ED',
+            data: n_appointment_year_before,
+          },
+        ],
+        xaxis: {
+          categories: resp.months_name,
+        },
+      };
+    });
+  }
+
+  selectionDoctor() {
+    this.dashboardDoctor();
+    this.dashboardDoctorYear();
+  }
 }

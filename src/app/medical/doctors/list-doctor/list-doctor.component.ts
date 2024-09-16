@@ -30,9 +30,22 @@ export class ListDoctorComponent {
   public role_generals: any = [];
   public doctor_selected: any;
 
+  public user: any;
+
   constructor(public doctorService: DoctorService) {}
   ngOnInit() {
     this.getTableData();
+    this.user = this.doctorService.authService.user;
+  }
+
+  isPermission(permission: string) {
+    if (this.user.roles.includes('Super-Admin')) {
+      return true;
+    }
+    if (this.user.permissions.includes(permission)) {
+      return true;
+    }
+    return false;
   }
 
   private getTableData(): void {
